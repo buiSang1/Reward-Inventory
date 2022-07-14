@@ -1,6 +1,6 @@
+<nb-layout center>
 
-
-  <!-- <nb-layout-header>
+  <nb-layout-header>
     <nb-actions size="medium">
 
       <nb-action icon="person-outline"></nb-action>
@@ -9,7 +9,7 @@
 
     </nb-actions>
 
-  </nb-layout-header> -->
+  </nb-layout-header>
 
   <nb-layout-column>
     <nb-card class="inventory-card">
@@ -70,15 +70,17 @@
         <input nbInput type="text" placeholder="Please input url image" fullWidth />
       </nb-card-body>
       <nb-card-footer>
-        <button class="btn-cancel" nbButton status="default" >
-          Cancel
-        </button>
-        <button style="margin-left: 10px" class="btn-submit" nbButton status="default">
-          Submit
-        </button>
+        <div style="float: right;">
+          <button nbButton status="default">
+            Cancel
+          </button>
+          <button style="margin-left: 10px" class="btn-submit" nbButton status="default">
+            Submit
+          </button>
+        </div>
       </nb-card-footer>
     </nb-card>
 
   </nb-layout-column>
-  <!-- <nb-layout-footer>Contact us</nb-layout-footer> -->
-
+  <nb-layout-footer>Contact us</nb-layout-footer>
+</nb-layout>
