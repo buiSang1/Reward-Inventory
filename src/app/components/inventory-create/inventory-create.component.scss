@@ -1,0 +1,27 @@
+nb-layout-header {
+  h1 {
+    color: red;
+  }
+}
+
+.inventory-card {
+  nb-card-body {
+    display: block;
+
+    p {
+      font-weight: 600;
+      font-size: 17px;
+    }
+
+    .container {
+      display: flex;
+      margin-top: 15px;
+
+      .row {
+        width: 100%;
+
+      }
+
+    }
+  }
+}

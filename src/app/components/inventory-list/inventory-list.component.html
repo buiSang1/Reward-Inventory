@@ -1,0 +1,30 @@
+
+<div class="btn-plus">
+  <button [routerLink]="['/inventory-create']" routerLinkActive="route-link-active"  style="background-color: #ffafcc;" nbButton  ><nb-icon icon="plus-circle-outline"></nb-icon></button>
+</div>
+<table class="customers" style="border-collapse: collapse">
+  <tr>
+    <th>STT</th>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Password</th>
+    <th>UserName</th>
+    <th>Thao Tac</th>
+  </tr>
+  <tr *ngFor="let user of users; let i = index" >
+    <td> {{ i + 1}} </td>
+    <td>{{ user._id }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.password }}</td>
+    <td>{{ user.username }}</td>
+    <td class="hidden">
+      <button nbButton ghost status="danger"><nb-icon icon="plus-square-outline"></nb-icon></button>
+      <button nbButton ghost status="danger"><nb-icon icon="edit-2-outline"></nb-icon></button>
+      <button nbButton ghost status="danger" ><nb-icon icon="trash-2-outline"></nb-icon></button>
+
+
+    </td>
+  </tr>
+</table>
