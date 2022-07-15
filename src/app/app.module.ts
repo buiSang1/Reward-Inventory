@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { InventoryCreateComponent } from './components/inventory-create/inventory-create.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { InventoryCreateComponent } from './components/inventory-create/inventor
     NbDialogModule.forChild(),
     NbDatepickerModule.forRoot(),
     NbDatepickerModule,
-    NbActionsModule
+    NbActionsModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

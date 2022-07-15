@@ -3,14 +3,12 @@
   <nb-layout-header>
     <nb-actions size="medium">
 
-      <nb-action icon="person-outline"></nb-action>
+      <nb-action routerLink="/" routerLinkActive="router-Link-Active"  icon="arrow-ios-back-outline"></nb-action>
       <nb-action icon="home-outline"></nb-action>
       <nb-action style="font-size: 20px;">Apoint </nb-action>
 
     </nb-actions>
-
   </nb-layout-header>
-
   <nb-layout-column>
     <nb-card class="inventory-card">
       <nb-card-header>
@@ -24,63 +22,91 @@
 
       </nb-card-header>
       <nb-card-body *ngIf="isCard">
-        <p>Name</p>
-        <input nbInput type="text" placeholder="Please input name" fullWidth />
-        <p>Description</p>
-        <textarea nbInput fullWidth placeholder="Please input description"></textarea>
+        <form [formGroup]="registerForm">
+          <p>Name</p>
+          <input nbInput type="text" placeholder="Please input name" fullWidth formControlName="Name" />
+          <p>Description</p>
+          <textarea nbInput fullWidth placeholder="Please input description" formControlName="Description"></textarea>
 
-        <div class="container">
-          <div class="row">
-            <div class="col-md-1" style="margin-right: 10px;">
-              <p>Type</p>
-              <nb-select placeholder="Please select type" fullWidth [(selected)]="selectedItem">
-                <nb-option value="0">None</nb-option>
-                <nb-option value="1">Others</nb-option>
-                <nb-option value="2">Point</nb-option>
-                <nb-option value="3">Voucher/Coupon</nb-option>
-                <nb-option value="4">Course</nb-option>
-                <nb-option value="5">Ticket</nb-option>
-              </nb-select>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1" style="margin-right: 10px;">
+                <p>Type</p>
+                <nb-select placeholder="Please select type" formControlName="Type" fullWidth
+                  [(selected)]="selectedItem">
+                  <nb-option value="01">Others</nb-option>
+                  <nb-option value="02">Point</nb-option>
+                  <nb-option value="03">Voucher/Coupon</nb-option>
+                  <nb-option value="04">Course</nb-option>
+                  <nb-option value="05">Ticket</nb-option>
+                </nb-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1" style="margin-left: 10px">
+                <p>Price</p>
+                <input nbInput type="number" placeholder="Please input price" fullWidth formControlName="Price" />
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-1" style="margin-left: 10px">
-              <p>Price</p>
-              <input nbInput type="number" placeholder="Please input price" fullWidth />
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1" style="margin-right: 10px;">
+                <p>Active</p>
+                <nb-select placeholder="Please select active" formControlName="Active_flag" fullWidth
+                  [(selected)]="selectedItem1">
+                  <nb-option [value]="true">Activated</nb-option>
+                  <nb-option [value]="false">Not activated</nb-option>
+                </nb-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1" style="margin-left: 10px">
+                <p>Approve</p>
+                <nb-select placeholder="Please select approve" formControlName="Is_approve" fullWidth
+                  [(selected)]="selectedItem2">
+                  <nb-option [value]="true">Approved</nb-option>
+                  <nb-option [value]="false">Not approved</nb-option>
+                </nb-select>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-1" style="margin-right: 10px;">
-              <p>Total</p>
-              <input nbInput type="number" placeholder="Please input total" fullWidth />
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1" style="margin-right: 10px;">
+                <p>Total</p>
+                <input nbInput type="number" placeholder="Please input total" fullWidth formControlName="Total" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1" style="margin-left: 10px">
+                <p>Shipping</p>
+                <input nbInput type="number" placeholder="Please input shipping" fullWidth formControlName="Shipping" />
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-1" style="margin-left: 10px">
-              <p>Shipping</p>
-              <input nbInput type="number" placeholder="Please input shipping" fullWidth />
-            </div>
-          </div>
-        </div>
-        <p>Sold</p>
-        <input nbInput type="text" placeholder="Please input sold" fullWidth />
-        <p>Images</p>
-        <input nbInput type="text" placeholder="Please input url image" fullWidth />
+          <p>Sold</p>
+          <input nbInput type="number" placeholder="Please input sold" fullWidth formControlName="Sold" />
+          <p>Image</p>
+          <input nbInput type="text" placeholder="Please input url image" fullWidth formControlName="Image" />
+        </form>
       </nb-card-body>
       <nb-card-footer>
         <div style="float: right;">
           <button nbButton status="default">
-            Cancel
+            Clear
           </button>
-          <button style="margin-left: 10px" class="btn-submit" nbButton status="default">
-            Submit
+          <button style="margin-left: 10px" class="btn-submit" (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
+            Save
           </button>
         </div>
       </nb-card-footer>
+
     </nb-card>
 
   </nb-layout-column>
-  <nb-layout-footer>Contact us</nb-layout-footer>
+
+  <nb-layout-footer>
+    <nb-action icon="facebook-outline"></nb-action>
+  </nb-layout-footer>
 </nb-layout>

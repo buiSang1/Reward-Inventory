@@ -1,59 +1,118 @@
 import { Component, OnInit } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
+import { Apollo, gql } from 'apollo-angular';
+import { inventory } from 'src/app/models/inventory';
 
 
+const Get_getAllRewardInventory = gql`query{
+  getAllRewardInventory{
+    _id
+    name
+    description
+    type
+    price
+    total
+    shipping
+    sold
+    is_approve
+    image
+    active_flag
+  }
+
+}`
+const Get_getRewardInvenByName = gql`
+query($NAME: String!){
+  getRewardInvenByName(name:$NAME){
+    _id
+    name
+    description
+    type
+    price
+    total
+    shipping
+    sold
+    is_approve
+    image
+    active_flag
+  }
+}`
+
+const Delete_RewardInventory = gql`
+mutation ($idRewardInventory: String!) {
+  removeRewardInventory(id: $idRewardInventory) {
+  _id
+  name
+  description
+  type
+  price
+  total
+  shipping
+  sold
+  is_approve
+  image
+  active_flag
+  }
+}`
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
   styleUrls: ['./inventory-list.component.scss']
 })
 export class InventoryListComponent implements OnInit {
-  users: any[] = [
-    {
-      "_id": "62cd328d59748f9f0b0b5aa8",
-      "email": "hinata@gmail.com",
-      "name": "Hinata",
-      "password": "$2b$10$8Q.U8zL/C8J5gafCGYwE7.YX8THGKSK1nm2w9xXvBLdhEOJYe1Uc2",
-      "username": "hinata"
-    },
-    {
-      "_id": "62ce1aa023a80dc211d99182",
-      "email": "naruto@gmail.com",
-      "name": "Naruto",
-      "password": "$2b$10$vcNjWsH/YCxOffoPQRjaAOvH2NmCpYeHHcg1L4RPLUmqvQQezoGSS",
-      "username": "Naruto"
-    },
-    {
-      "_id": "62ce6e9d23a80dc211d99221",
-      "email": "vegeta@gmail.com",
-      "name": "Vegeta",
-      "password": "$2b$10$goaPq8VTPzML4mhRQVrnQuJ02OMY.VkgweCo5JjiKuJHvCDxHc6eO",
-      "username": "vegeta"
-    },
-    {
-      "_id": "62ce7c2723a80dc211d9924d",
-      "email": "songoku@gmail.com",
-      "name": "Son Goku",
-      "password": "$2b$10$6NB3W0LJyyj1x0FOFQ6Wq.laj/o/i5XK/OE4q6nh1yCIkKXT6Dxhq",
-      "username": "goku"
-    },
-    {
-      "_id": "62ce822cdab8076717d209b1",
-      "email": "sakura@gmail.com",
-      "name": "Haruno Sakura",
-      "password": "$2b$10$Qc9AuJSiKfHDnINjvjNlyuooqJfWVDRBp9In5YTKovN4V1xW8omDC",
-      "username": "sakura"
-    },
-    {
-      "_id": "62ce8244dab8076717d209b5",
-      "email": "sasuke@gmail.com",
-      "name": "Uchiha Sasuke",
-      "password": "$2b$10$alVQXNZPnvIfhTehj.quAutIQ4g9EutVOI3rKYgtLffGe.Dv9DbrC",
-      "username": "sasuke"
-    }
-  ];
-  constructor() { }
+  reward_inventor: inventory[] = [];
+  names: string[] = [];
+  selectbyName = '';
+
+  constructor(private apollo: Apollo,
+
+    ) { }
 
   ngOnInit(): void {
+    this.apollo
+      .watchQuery({
+        query: Get_getAllRewardInventory,
+
+      })
+      .valueChanges.subscribe((res: any) => {
+
+        this.reward_inventor = res?.data?.getAllRewardInventory;
+        console.log("data Reward Inventory", res);
+      })
+  }
+
+  SearchRewardInvenByName() {
+    this.apollo
+      .watchQuery({
+        query: Get_getRewardInvenByName,
+        variables:
+        {
+          NAME: this.selectbyName,
+        }
+      })
+      .valueChanges.subscribe((res: any) => {
+
+        this.reward_inventor = res?.data?.getRewardInvenByName;
+        console.log("Search By Name: ", this.reward_inventor)
+      })
+  }
+  RemoveRewardInventory(inventoryid: string) {
+    this.apollo
+      .mutate({
+        mutation: Delete_RewardInventory,
+        variables: {
+          idRewardInventory: inventoryid,
+        },
+      })
+      .subscribe((res: any) => {
+        this.reward_inventor = res.data.Delete_RewardInventory;
+      });
+
+    console.log('ID', inventoryid);
+    this.refresh();
+
+  }
+  refresh(): void {
+    window.location.reload();
   }
 
 }
