@@ -102,6 +102,8 @@ export class InventoryCreateComponent implements OnInit {
         console.log('Register inventory', this.inventory);
         this.router.navigate(['/']);
         // this.refresh();
+
+
       });
 
   }
