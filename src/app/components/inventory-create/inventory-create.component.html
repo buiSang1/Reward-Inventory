@@ -93,7 +93,7 @@
       </nb-card-body>
       <nb-card-footer>
         <div style="float: right;">
-          <button nbButton status="default">
+          <button nbButton (click)="clearForm()" status="default">
             Clear
           </button>
           <button style="margin-left: 10px" class="btn-submit" (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
@@ -107,6 +107,6 @@
   </nb-layout-column>
 
   <nb-layout-footer>
-    <nb-action icon="facebook-outline"></nb-action>
+    <nb-action icon="facebook-outline" onclick="location.href='https://www.facebook.com/BuiSang.Vo';"></nb-action>
   </nb-layout-footer>
 </nb-layout>

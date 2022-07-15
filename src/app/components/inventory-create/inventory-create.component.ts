@@ -101,16 +101,13 @@ export class InventoryCreateComponent implements OnInit {
         this.inventory = inventory;
         console.log('Register inventory', this.inventory);
         this.router.navigate(['/']);
-        // this.refresh();
-
-
       });
 
   }
-  // refresh(): void {
-  //   window.location.reload();
-  // }
 
+  clearForm(){
+    this.registerForm.reset();
+  }
 
   toggleCard (){
     this.isCard = !this.isCard;
