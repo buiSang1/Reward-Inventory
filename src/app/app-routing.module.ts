@@ -4,8 +4,10 @@ import { InventoryCreateComponent } from './components/inventory-create/inventor
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 
 const routes: Routes = [
-  { path: '', component: InventoryListComponent},
-  { path: 'inventory-create', component: InventoryCreateComponent}
+  { path: 'inventory-list', component: InventoryListComponent },
+  { path: 'inventory-create/:id', component: InventoryCreateComponent },
+  { path: 'inventory-edit/:id', component: InventoryCreateComponent }
+
 ];
 
 @NgModule({

@@ -11,12 +11,14 @@ import { InventoryListComponent } from './components/inventory-list/inventory-li
 import { InventoryCreateComponent } from './components/inventory-create/inventory-create.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventoryListComponent,
-    InventoryCreateComponent
+    InventoryCreateComponent,
+    DialogConfirmComponent
   ],
   imports: [
     BrowserModule,

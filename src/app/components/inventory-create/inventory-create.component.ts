@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { NbDialogRef } from '@nebular/theme';
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
@@ -41,7 +41,77 @@ mutation(
   }
 }
 `
-
+// const Get_getRewardInvenById = gql`
+//   query ($ID: String!) {
+//     getRewardInvenById(id: $ID) {
+//       _id
+//       name
+//       description
+//       type
+//       price
+//       total
+//       shipping
+//       sold
+//       is_approve
+//       image
+//       active_flag
+//     }
+//   }
+// `;
+const Get_getRewardInventory = gql`
+  query ($ID: String!) {
+    getRewardInvenById(id: $ID) {
+      _id
+      name
+      description
+      type
+      price
+      total
+      shipping
+      sold
+      is_approve
+      image
+      active_flag
+    }
+  }
+`;
+const Update_RewardInventory = gql`
+mutation(
+  $ID: String!,
+ 	$NAME: String!,
+  $DESCRIPTION:String!,
+  $PRICE:Float!,
+  $TYPE:String!,
+  $TOTAL:Float!,
+  $ACTIVEFLAG:Boolean!
+  $SHIPPING:Float!,
+  $SOLD:Float!,
+  $ISAPPROVE: Boolean!,
+  $IMAGE:[String!]
+){
+  updateRewardInventory(
+    id:$ID,
+    RewardInventoryData:{
+      name:$NAME,
+      description:$DESCRIPTION,
+      price:$PRICE,
+      type:$TYPE,
+      total:$TOTAL,
+      active_flag:$ACTIVEFLAG,
+      shipping:$SHIPPING,
+      sold:$SOLD,
+      is_approve:$ISAPPROVE,
+      image:$IMAGE,
+    }
+  ){
+    _id
+    name
+    description
+    create_at
+    total
+    price
+  }
+}`
 @Component({
   selector: 'app-inventory-create',
   templateUrl: './inventory-create.component.html',
@@ -51,9 +121,10 @@ export class InventoryCreateComponent implements OnInit {
   selectedItem = '01';
   selectedItem1 = '01';
   selectedItem2 = '01';
+
   inventory: inventory[] = [];
   names: string[] = [];
-
+  public id: any;
   isCard: boolean = true;
 
   registerForm = new FormGroup({
@@ -73,9 +144,10 @@ export class InventoryCreateComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private router: Router,
-    // protected dialogRef: NbDialogRef<InventoryCreateComponent>
+    private route: ActivatedRoute
+
   ) { }
-  ngOnInit(): void { }
+
 
 
   RegisterInventory() {
@@ -100,16 +172,98 @@ export class InventoryCreateComponent implements OnInit {
         inventory.unshift(res['Register']);
         this.inventory = inventory;
         console.log('Register inventory', this.inventory);
-        this.router.navigate(['/']);
+        this.router.navigate(['inventory-list']);
+
       });
 
-  }
 
-  clearForm(){
+
+  }
+  getRewardInventory(id: string) {
+
+    this.apollo
+      .watchQuery({
+        query: Get_getRewardInventory,
+        variables: {
+          ID: id,
+
+        },
+      })
+      .valueChanges.subscribe((res: any) => {
+        // this.registerForm = res.data.getRewardInvenById;
+        console.log("Data: ", res.data.getRewardInvenById);
+        for (const controlName in this.registerForm.controls) {
+            if (controlName) {
+              this.registerForm.controls['Name'].setValue(res.data.getRewardInvenById.name);
+              this.registerForm.controls['Description'].setValue(res.data.getRewardInvenById.description);
+              this.registerForm.controls['Type'].setValue(res.data.getRewardInvenById.type);
+              this.registerForm.controls['Price'].setValue(res.data.getRewardInvenById.price);
+              this.registerForm.controls['Active_flag'].setValue(res.data.getRewardInvenById.active_flag);
+              this.registerForm.controls['Is_approve'].setValue(res.data.getRewardInvenById.is_approve);
+              this.registerForm.controls['Total'].setValue(res.data.getRewardInvenById.total);
+              this.registerForm.controls['Shipping'].setValue(res.data.getRewardInvenById.shipping);
+              this.registerForm.controls['Sold'].setValue(res.data.getRewardInvenById.sold);
+              this.registerForm.controls['Image'].setValue(res.data.getRewardInvenById.image);
+
+            }
+
+          }
+      });
+      // this.refresh();
+  }
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log('ID Here', this.id);
+    if (this.id != '') {
+      this.getRewardInventory(this.id);
+    }
+    // console.log(this.registerForm.controls)
+  }
+  updateRewardInventory() {
+    const data =  this.registerForm.value
+    console.log(data);
+    this.apollo
+      .mutate({
+        mutation: Update_RewardInventory,
+        variables: {
+          ID: this.id,
+          NAME: this.registerForm.controls['Name'].value,
+          DESCRIPTION: this.registerForm.controls['Description'].value,
+          PRICE: this.registerForm.controls['Price'].value,
+          TYPE: this.registerForm.controls['Type'].value,
+          TOTAL: this.registerForm.controls['Total'].value,
+          ACTIVEFLAG: this.registerForm.controls['Active_flag'].value,
+          SHIPPING: this.registerForm.controls['Shipping'].value,
+          SOLD: this.registerForm.controls['Sold'].value,
+          ISAPPROVE: this.registerForm.controls['Is_approve'].value,
+          IMAGE: this.registerForm.controls['Image'].value,
+        },
+
+      })
+      .subscribe((res: any) => {
+        let inventory = Object.assign([], this.inventory);
+        inventory.unshift(res['Update']);
+        this.inventory = inventory;
+        console.log('Update', this.inventory);
+        this.router.navigate(['inventory-list']);
+
+      });
+  }
+  // refresh(): void {
+  //   window.location.reload();
+  // }
+  refresh() {
+    setTimeout(()=>{
+      window.location.reload();
+    }, 100);
+}
+  clearForm() {
     this.registerForm.reset();
   }
-
-  toggleCard (){
+  backInventoryList() {
+    this.router.navigate(['inventory-list']);
+  }
+  toggleCard() {
     this.isCard = !this.isCard;
   }
 }

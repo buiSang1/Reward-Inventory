@@ -3,7 +3,7 @@
   <nb-layout-header>
     <nb-actions size="medium">
 
-      <nb-action routerLink="/" routerLinkActive="router-Link-Active"  icon="arrow-ios-back-outline"></nb-action>
+      <nb-action (click)="backInventoryList()"  icon="arrow-ios-back-outline"></nb-action>
       <nb-action icon="home-outline"></nb-action>
       <nb-action style="font-size: 20px;">Apoint </nb-action>
 
@@ -33,7 +33,7 @@
               <div class="col-md-1" style="margin-right: 10px;">
                 <p>Type</p>
                 <nb-select placeholder="Please select type" formControlName="Type" fullWidth
-                  [(selected)]="selectedItem">
+                  [selected]="selectedItem">
                   <nb-option value="01">Others</nb-option>
                   <nb-option value="02">Point</nb-option>
                   <nb-option value="03">Voucher/Coupon</nb-option>
@@ -96,8 +96,11 @@
           <button nbButton (click)="clearForm()" status="default">
             Clear
           </button>
-          <button style="margin-left: 10px" class="btn-submit" (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
+          <!-- <button style="margin-left: 10px" class="btn-submit" (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
             Save
+          </button> -->
+          <button style="margin-left: 10px" class="btn-submit" (click)="updateRewardInventory()"  nbButton status="default">
+            Update
           </button>
         </div>
       </nb-card-footer>

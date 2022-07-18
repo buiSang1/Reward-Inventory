@@ -5,7 +5,7 @@
 <h1 style="text-align: center;">REWARD INVENTORY</h1>
 <br>
 <br>
-<button nbButton routerLink="/inventory-create" routerLinkActive="router-Link-Active" status="basic"
+<button nbButton (click)="addIventory()" status="basic"
   style="border: 1px solid rgb(219, 189, 189);">
   <nb-icon icon="plus-circle-outline"></nb-icon>
 </button>
@@ -31,7 +31,7 @@
       <tr>
         <th></th>
         <th>
-          <form class="search-by" (keyup)="SearchRewardInvenByName()">
+          <form class="search-by" (keyup)="SearchRewardInvenByName()" >
             <input id="search-by-name" type="text" name="selectbyName" [(ngModel)]="selectbyName" class="search-input"
               nbInput fieldSize="small" placeholder="Search By Name" />
           </form>
@@ -73,11 +73,11 @@
           </form>
         </th>
       </tr>
-      <tr *ngFor="let reward of reward_inventor">
+      <tr *ngFor="let reward of reward_inventory">
 
         <td>
           <button nbButton outline  status="success">
-            <nb-icon style="cursor: pointer" title="Nhấn vào để chỉnh sửa" icon="edit-2-outline" status="danger"
+            <nb-icon style="cursor: pointer" (click)="editRewardInventory(reward._id)" title="Nhấn vào để chỉnh sửa" icon="edit-2-outline" status="danger"
               size="tiny"></nb-icon>
           </button>
           <button nbButton outline (click)="RemoveRewardInventory(reward._id)"  status="success">
