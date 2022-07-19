@@ -4,9 +4,9 @@ import { InventoryCreateComponent } from './components/inventory-create/inventor
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 
 const routes: Routes = [
-  { path: 'inventory-list', component: InventoryListComponent },
-  { path: 'inventory-create/:id', component: InventoryCreateComponent },
-  { path: 'inventory-edit/:id', component: InventoryCreateComponent }
+  { path: '', component: InventoryListComponent },
+  { path: 'project/:id', component: InventoryCreateComponent },
+
 
 ];
 

@@ -73,7 +73,7 @@ mutation ($idRewardInventory: String!) {
 export class InventoryListComponent implements OnInit {
   reward_inventory: inventory[] = [];
   selectbyName = '';
-
+  updateid: boolean = false;
 
 
 
@@ -128,7 +128,7 @@ export class InventoryListComponent implements OnInit {
 
   }
   addIventory() {
-    this.router.navigate(['inventory-create', '']);
+    this.router.navigate(['project', '']);
   }
   editRewardInventory(id: string) {
     this.apollo
@@ -146,7 +146,7 @@ export class InventoryListComponent implements OnInit {
         // console.log("res data:",res.data.getRewardInvenById.name)
       });
 
-    this.router.navigate(['inventory-edit', id]);
+    this.router.navigate(['project', id]);
 
   }
 

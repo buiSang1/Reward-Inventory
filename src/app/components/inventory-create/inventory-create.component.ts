@@ -122,7 +122,7 @@ export class InventoryCreateComponent implements OnInit {
   selectedItem1 = '01';
   selectedItem2 = '01';
 
-  inventory: inventory[] = [];
+  reward_inventory: inventory[] = [];
   names: string[] = [];
   public id: any;
   isCard: boolean = true;
@@ -168,12 +168,10 @@ export class InventoryCreateComponent implements OnInit {
         },
       })
       .subscribe((res: any) => {
-        let inventory = Object.assign([], this.inventory);
-        inventory.unshift(res['Register']);
-        this.inventory = inventory;
-        console.log('Register inventory', this.inventory);
-        this.router.navigate(['inventory-list']);
-
+        let reward_inventory = Object.assign([], this.reward_inventory);
+        reward_inventory.unshift(res['Register']);
+        this.reward_inventory = reward_inventory;
+        this.router.navigate(['/']);
       });
 
 
@@ -190,7 +188,7 @@ export class InventoryCreateComponent implements OnInit {
         },
       })
       .valueChanges.subscribe((res: any) => {
-        // this.registerForm = res.data.getRewardInvenById;
+
         console.log("Data: ", res.data.getRewardInvenById);
         for (const controlName in this.registerForm.controls) {
             if (controlName) {
@@ -209,7 +207,7 @@ export class InventoryCreateComponent implements OnInit {
 
           }
       });
-      // this.refresh();
+
   }
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -217,7 +215,7 @@ export class InventoryCreateComponent implements OnInit {
     if (this.id != '') {
       this.getRewardInventory(this.id);
     }
-    // console.log(this.registerForm.controls)
+
   }
   updateRewardInventory() {
     const data =  this.registerForm.value
@@ -241,27 +239,24 @@ export class InventoryCreateComponent implements OnInit {
 
       })
       .subscribe((res: any) => {
-        let inventory = Object.assign([], this.inventory);
-        inventory.unshift(res['Update']);
-        this.inventory = inventory;
-        console.log('Update', this.inventory);
-        this.router.navigate(['inventory-list']);
+        let reward_inventory = Object.assign([], this.reward_inventory);
+        reward_inventory.unshift(res['Update']);
+        this.reward_inventory = reward_inventory;
+        console.log('Update', this.reward_inventory);
+        this.router.navigate(['/']);
 
       });
   }
-  // refresh(): void {
-  //   window.location.reload();
-  // }
-  refresh() {
-    setTimeout(()=>{
-      window.location.reload();
-    }, 100);
-}
+  refresh(): void {
+    window.location.reload();
+  }
+
+
   clearForm() {
     this.registerForm.reset();
   }
   backInventoryList() {
-    this.router.navigate(['inventory-list']);
+    this.router.navigate(['/']);
   }
   toggleCard() {
     this.isCard = !this.isCard;
