@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbLayoutModule, NbSidebarModule, NbButtonModule, NbCardModule, NbThemeModule, NbIconModule, NbSelectModule, NbDialogModule, NbDatepickerModule, NbInputModule, NbActionsModule } from '@nebular/theme';
+import { NbLayoutModule, NbSidebarModule, NbButtonModule, NbCardModule, NbThemeModule, NbIconModule, NbSelectModule, NbDialogModule, NbDatepickerModule, NbInputModule, NbActionsModule, NbCheckboxModule } from '@nebular/theme';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +41,8 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
     NbDatepickerModule,
     NbActionsModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    NbCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

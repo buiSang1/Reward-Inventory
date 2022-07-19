@@ -26,6 +26,9 @@ const Get_getRewardInvenById = gql`
   query ($ID: String!) {
     getRewardInvenById(id: $ID) {
       _id
+      type
+      is_approve
+      active_flag
     }
   }
 `;
@@ -73,7 +76,6 @@ mutation ($idRewardInventory: String!) {
 export class InventoryListComponent implements OnInit {
   reward_inventory: inventory[] = [];
   selectbyName = '';
-  updateid: boolean = false;
 
 
 
@@ -83,16 +85,18 @@ export class InventoryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    debugger
     this.apollo
       .watchQuery({
         query: Get_getAllRewardInventory,
+        fetchPolicy: 'network-only'
 
       })
       .valueChanges.subscribe((res: any) => {
-
         this.reward_inventory = res?.data?.getAllRewardInventory;
-        console.log("data Reward Inventory", res);
+        // console.log("data Reward Inventory", res);
       })
+
   }
 
   SearchRewardInvenByName() {
@@ -140,18 +144,18 @@ export class InventoryListComponent implements OnInit {
         },
       })
       .valueChanges.subscribe((res: any) => {
-        // this.reward_inventory = res.data.getRewardInvenById;
+        this.reward_inventory = res.data.getRewardInvenById;
         console.log('Search By ID: ', id);
         console.log("Data: ", res.data.getRewardInvenById);
         // console.log("res data:",res.data.getRewardInvenById.name)
+        setTimeout(() => {
+          // this.refresh();
+        }, 0);
       });
 
     this.router.navigate(['project', id]);
-
   }
-
   refresh(): void {
     window.location.reload();
   }
-
 }
