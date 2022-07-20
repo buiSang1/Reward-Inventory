@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogModule, NbDialogService, NbToastrService } from '@nebular/theme';
 
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
@@ -58,9 +59,11 @@ mutation ($idRewardInventory: String!) {
 export class InventoryListComponent implements OnInit {
   reward_inventory: inventory[] = [];
   selectbyName = '';
-  public status = "suscess"
+  public status = '';
   constructor(private apollo: Apollo,
     private router: Router,
+    private toastrService: NbToastrService,
+    private dialogService: NbDialogService
   ) { }
 
   ngOnInit(): void {
@@ -94,12 +97,11 @@ export class InventoryListComponent implements OnInit {
         .subscribe((res: any) => {
 
           if (res) {
+            this.toastrService.success( this.status,`Delete completed successfully`,)
 
 
-            // this.toastrService.success(res.data.reward_inventory, "Xóa thành công", );
-            alert("Delete!!")
-            this.loadData();
           }
+          this.loadData();
         });
     }
   }
@@ -125,5 +127,9 @@ export class InventoryListComponent implements OnInit {
 
     this.router.navigate(['project', id]);
   }
+  open() {
+    this.dialogService.open(ConfirmDialogComponent, {
 
+    })
+  }
 }
