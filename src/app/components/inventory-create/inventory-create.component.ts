@@ -208,8 +208,8 @@ export class InventoryCreateComponent implements OnInit {
       .valueChanges.subscribe((res: any) => {
         this.data = res.data.getRewardInvenById
         this.registerForm.patchValue({ ...this.data })
-        console.log(this.data);
-        console.log(this.selectedItem)
+        // console.log(this.data);
+        // console.log(this.selectedItem)
 
       });
   }

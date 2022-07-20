@@ -85,7 +85,11 @@ export class InventoryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+
+    this.loadData();
+
+  }
+  private loadData() {
     this.apollo
       .watchQuery({
         query: Get_getAllRewardInventory,
@@ -96,9 +100,7 @@ export class InventoryListComponent implements OnInit {
         this.reward_inventory = res?.data?.getAllRewardInventory;
         // console.log("data Reward Inventory", res);
       })
-
   }
-
   SearchRewardInvenByName() {
     this.apollo
       .watchQuery({
@@ -111,24 +113,34 @@ export class InventoryListComponent implements OnInit {
       .valueChanges.subscribe((res: any) => {
 
         this.reward_inventory = res?.data?.getRewardInvenByName;
-        console.log("Search By Name: ", this.reward_inventory)
+        // console.log("Search By Name: ", this.reward_inventory)
       })
 
   }
   RemoveRewardInventory(inventoryid: string) {
-    this.apollo
-      .mutate({
-        mutation: Delete_RewardInventory,
-        variables: {
-          idRewardInventory: inventoryid,
-        },
-      })
-      .subscribe((res: any) => {
-        this.reward_inventory = res.data.Delete_RewardInventory;
-      });
+    let confirmResult = confirm("Are you sure you want to remove this reward inventory");
+    if (confirmResult) {
+      this.apollo
+        .mutate({
+          mutation: Delete_RewardInventory,
+          variables: {
+            idRewardInventory: inventoryid,
+          },
+        })
+        .subscribe((res: any) => {
 
-    console.log('ID', inventoryid);
-    this.refresh();
+          if (res) {
+            alert("Delete!!")
+            this.loadData();
+          }
+          // this.reward_inventory = res.data.Delete_RewardInventory;
+
+
+        });
+    }
+
+    // console.log('ID', inventoryid);
+
 
   }
   addIventory() {
@@ -145,8 +157,8 @@ export class InventoryListComponent implements OnInit {
       })
       .valueChanges.subscribe((res: any) => {
         this.reward_inventory = res.data.getRewardInvenById;
-        console.log('Search By ID: ', id);
-        console.log("Data: ", res.data.getRewardInvenById);
+        // console.log('Search By ID: ', id);
+        // console.log("Data: ", res.data.getRewardInvenById);
         // console.log("res data:",res.data.getRewardInvenById.name)
         setTimeout(() => {
           // this.refresh();
