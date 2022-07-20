@@ -61,23 +61,7 @@ const Get_getRewardInvenById = gql`
     }
   }
 `;
-// const Get_getRewardInventory = gql`
-//   query ($ID: String!) {
-//     getRewardInvenById(id: $ID) {
-//       _id
-//       name
-//       description
-//       type
-//       price
-//       total
-//       shipping
-//       sold
-//       is_approve
-//       image
-//       active_flag
-//     }
-//   }
-// `;
+
 const Update_RewardInventory = gql`
 mutation(
   $ID: String!,
@@ -185,9 +169,6 @@ export class InventoryCreateComponent implements OnInit {
         this.inventory = inventory;
         // console.log('Register inventory', this.inventory);
 
-        // setTimeout(() => {
-        //   this.refresh();
-        // }, 0);
 
         this.router.navigate(['/']);
       });

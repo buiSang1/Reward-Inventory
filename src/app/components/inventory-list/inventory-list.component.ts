@@ -133,13 +133,13 @@ export class InventoryListComponent implements OnInit {
             alert("Delete!!")
             this.loadData();
           }
-          // this.reward_inventory = res.data.Delete_RewardInventory;
+
 
 
         });
     }
 
-    // console.log('ID', inventoryid);
+
 
 
   }
@@ -160,9 +160,7 @@ export class InventoryListComponent implements OnInit {
         // console.log('Search By ID: ', id);
         // console.log("Data: ", res.data.getRewardInvenById);
         // console.log("res data:",res.data.getRewardInvenById.name)
-        setTimeout(() => {
-          // this.refresh();
-        }, 0);
+
       });
 
     this.router.navigate(['project', id]);
