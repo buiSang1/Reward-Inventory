@@ -1,4 +1,4 @@
-<br>
+<!-- <br>
 <br>
 <br>
 
@@ -20,62 +20,20 @@
       <tr>
         <th>ACTION</th>
         <th>NAME</th>
+        <th>DESCRIPTION</th>
         <th>TYPE</th>
+        <th>ACTIVE</th>
         <th>PRICE</th>
         <th>TOTAL</th>
         <th>SHIPPING</th>
         <th>SOLD</th>
+        <th>APPROVE</th>
         <th>IMAGE</th>
       </tr>
-      <tr>
-        <th></th>
-        <th>
-          <form class="search-by" (keyup)="SearchRewardInvenByName()">
-            <input id="search-by-name" type="text" name="selectbyName" [(ngModel)]="selectbyName" class="search-input"
-              nbInput fieldSize="small" placeholder="Search By Name" />
-          </form>
-        </th>
 
-        <th>
-          <form class="search-by">
-            <nb-select placeholder="Search By Type" size="small" class="search-input">
-              <nb-option value="01">Others</nb-option>
-              <nb-option value="02">Point</nb-option>
-              <nb-option value="03">Voucher/Coupon</nb-option>
-              <nb-option value="04">Course</nb-option>
-              <nb-option value="05">Ticket</nb-option>
-            </nb-select>
-          </form>
-        </th>
-        <th>
-          <form class="search-by">
-            <input id="search-by-price" type="number" class="search-input" nbInput fieldSize="small"
-              placeholder="Search By Price" />
-          </form>
-        </th>
-        <th>
-          <form class="search-by">
-            <input id="search-by-total" type="number" class="search-input" nbInput fieldSize="small"
-              placeholder="Search By Total" />
-          </form>
-        </th>
-        <th>
-          <form class="search-by">
-            <input id="search-by-shipping" type="number" class="search-input" nbInput fieldSize="small"
-              placeholder="Search By Shipping" />
-          </form>
-        </th>
-        <th>
-          <form class="search-by">
-            <input id="search-by-sold" type="number" class="search-input" nbInput fieldSize="small"
-              placeholder="Search By Sold" />
-          </form>
-        </th>
-        <th></th>
-      </tr>
       <tr *ngFor="let reward of reward_inventory">
 
-        <td>
+        <td style="text-align: center;">
           <button nbButton outline status="success">
             <nb-icon style="cursor:pointer" (click)="editRewardInventory(reward._id)" title="Nhấn vào để chỉnh sửa"
               icon="edit-2-outline" status="danger" size="tiny"></nb-icon>
@@ -85,8 +43,9 @@
             </nb-icon>
           </button>
         </td>
-        <!-- (click)="RemoveRewardInventory(reward._id)" -->
+
         <td>{{reward.name}}</td>
+        <td>{{reward.description}}</td>
 
         <td *ngIf="reward.type === '01'">Others </td>
         <td *ngIf="reward.type === '02'">Point</td>
@@ -94,11 +53,12 @@
         <td *ngIf="reward.type === '04'">Course</td>
         <td *ngIf="reward.type === '05'">Ticket</td>
 
-
+        <td>{{reward.active_flag}}</td>
         <td>{{reward.price}}</td>
         <td>{{reward.total}}</td>
         <td>{{reward.shipping}}</td>
         <td>{{reward.sold}}</td>
+        <td>{{reward.is_approve}}</td>
         <td>
           <img *ngIf="reward.image" src="{{reward.image}}" height="50" width="50">
         </td>
@@ -106,4 +66,61 @@
     </table>
     <br>
   </nb-card-body>
-</nb-card>
+</nb-card> -->
+
+<div class="table-users">
+  <button nbButton (click)="addIventory()" status="basic" style="border: 1px solid rgb(219, 189, 189); float: right;padding: 16px;">
+    <nb-icon icon="plus-circle-outline"></nb-icon>
+  </button>
+  <div class="header">Reward Inventory List</div>
+
+  <table cellspacing="0">
+    <tr>
+      <th style="text-align: center;">ACTION</th>
+      <th>NAME</th>
+      <th>DESCRIPTION</th>
+      <th>TYPE</th>
+      <th>ACTIVE</th>
+      <th>PRICE</th>
+      <th>TOTAL</th>
+      <th>SHIPPING</th>
+      <th>SOLD</th>
+      <th>APPROVE</th>
+      <th>IMAGE</th>
+
+    </tr>
+
+    <tr *ngFor="let reward of reward_inventory">
+
+      <td style="text-align: center;">
+        <button nbButton outline status="success">
+          <nb-icon style="cursor:pointer" (click)="editRewardInventory(reward._id)" title="Nhấn vào để chỉnh sửa"
+            icon="edit-2-outline" status="danger" size="tiny"></nb-icon>
+        </button>
+        <button nbButton outline (click)="RemoveRewardInventory(reward._id)" status="success">
+          <nb-icon style="cursor: pointer" title="Nhấn vào để xóa" icon="trash-2-outline" status="danger" size="tiny">
+          </nb-icon>
+        </button>
+      </td>
+
+      <td>{{reward.name}}</td>
+      <td>{{reward.description}}</td>
+
+      <td *ngIf="reward.type === '01'">Others </td>
+      <td *ngIf="reward.type === '02'">Point</td>
+      <td *ngIf="reward.type === '03'">Voucher/Coupon</td>
+      <td *ngIf="reward.type === '04'">Course</td>
+      <td *ngIf="reward.type === '05'">Ticket</td>
+
+      <td>{{reward.active_flag}}</td>
+      <td>{{reward.price}}</td>
+      <td>{{reward.total}}</td>
+      <td>{{reward.shipping}}</td>
+      <td>{{reward.sold}}</td>
+      <td>{{reward.is_approve}}</td>
+      <td>
+        <img *ngIf="reward.image" src="{{reward.image}}" >
+      </td>
+    </tr>
+  </table>
+</div>

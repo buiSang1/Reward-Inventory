@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialogService } from '@nebular/theme';
+
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 
 const Get_getAllRewardInventory = gql`query{
@@ -32,29 +33,10 @@ const Get_getRewardInvenById = gql`
     }
   }
 `;
-const Get_getRewardInvenByName = gql`
-query($NAME: String!){
-  getRewardInvenByName(name:$NAME){
-    _id
-    name
-    description
-    type
-    price
-    total
-    shipping
-    sold
-    is_approve
-    image
-    active_flag
-  }
-}`
-
-
-
 
 const Delete_RewardInventory = gql`
 mutation ($idRewardInventory: String!) {
-  removeRewardInventory(id: $idRewardInventory) {
+  deleteRewardInventory(id: $idRewardInventory) {
   _id
   name
   description
@@ -76,12 +58,9 @@ mutation ($idRewardInventory: String!) {
 export class InventoryListComponent implements OnInit {
   reward_inventory: inventory[] = [];
   selectbyName = '';
-
-
-
+  public status = "suscess"
   constructor(private apollo: Apollo,
     private router: Router,
-    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -101,22 +80,7 @@ export class InventoryListComponent implements OnInit {
         // console.log("data Reward Inventory", res);
       })
   }
-  SearchRewardInvenByName() {
-    this.apollo
-      .watchQuery({
-        query: Get_getRewardInvenByName,
-        variables:
-        {
-          NAME: this.selectbyName,
-        }
-      })
-      .valueChanges.subscribe((res: any) => {
 
-        this.reward_inventory = res?.data?.getRewardInvenByName;
-        // console.log("Search By Name: ", this.reward_inventory)
-      })
-
-  }
   RemoveRewardInventory(inventoryid: string) {
     let confirmResult = confirm("Are you sure you want to remove this reward inventory");
     if (confirmResult) {
@@ -130,18 +94,14 @@ export class InventoryListComponent implements OnInit {
         .subscribe((res: any) => {
 
           if (res) {
+
+
+            // this.toastrService.success(res.data.reward_inventory, "Xóa thành công", );
             alert("Delete!!")
             this.loadData();
           }
-
-
-
         });
     }
-
-
-
-
   }
   addIventory() {
     this.router.navigate(['project', '']);
@@ -165,7 +125,5 @@ export class InventoryListComponent implements OnInit {
 
     this.router.navigate(['project', id]);
   }
-  refresh(): void {
-    window.location.reload();
-  }
+
 }

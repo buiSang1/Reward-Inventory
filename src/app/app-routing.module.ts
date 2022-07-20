@@ -5,9 +5,8 @@ import { InventoryListComponent } from './components/inventory-list/inventory-li
 
 const routes: Routes = [
   { path: '', component: InventoryListComponent },
+
   { path: 'project/:id', component: InventoryCreateComponent },
-
-
 ];
 
 @NgModule({

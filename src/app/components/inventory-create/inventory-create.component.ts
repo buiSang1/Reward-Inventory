@@ -20,7 +20,7 @@ mutation(
 )
 {
   creareRewardInventory(
-    createRewardInventoryData:{
+    dataInput:{
       name:$NAME,
       description:$DESCRIPTION,
       price:$PRICE,
@@ -36,11 +36,8 @@ mutation(
     name
     description
     create_at
-    type
     total
     price
-    shipping
-    sold
   }
 }
 `
@@ -78,7 +75,7 @@ mutation(
 ){
   updateRewardInventory(
     id:$ID,
-    RewardInventoryData:{
+    change:{
       name:$NAME,
       description:$DESCRIPTION,
       price:$PRICE,
@@ -100,6 +97,7 @@ mutation(
     create_at
     total
     price
+    image
   }
 }`
 @Component({

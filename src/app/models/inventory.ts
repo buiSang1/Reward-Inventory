@@ -8,6 +8,6 @@ export interface inventory {
   shipping: number;
   sold:number;
   is_approve: boolean;
-  image:[string]
+  image:[string];
   active_flag: boolean;
 }

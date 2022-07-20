@@ -1,27 +1,28 @@
+$baseColor: #398B93;
+
 nb-layout-header {
   h1 {
     color: red;
   }
 }
 
-.inventory-card {
-  nb-card-body {
-    display: block;
 
-    p {
-      font-weight: 600;
-      font-size: 17px;
-    }
+nb-card-body {
+  display: block;
 
-    .container {
-      display: flex;
-      margin-top: 15px;
+  p {
+    font-weight: 600;
+    font-size: 17px;
+  }
 
-      .row {
-        width: 100%;
+  .container {
+    display: flex;
+    margin-top: 15px;
 
-      }
+    .row {
+      width: 100%;
 
     }
+
   }
 }
