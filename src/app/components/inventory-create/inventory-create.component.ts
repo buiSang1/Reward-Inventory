@@ -115,7 +115,7 @@ export class InventoryCreateComponent implements OnInit {
   selectedItem2: string = '01';
   data = {};
   registerForm: FormGroup;
-  inventory: inventory[] = [];
+  reward_inventory: inventory[] = [];
   names: string[] = [];
   public id: any;
   isCard: boolean = true;
@@ -139,7 +139,7 @@ export class InventoryCreateComponent implements OnInit {
       shipping: new FormControl('', Validators.required),
       sold: new FormControl('', Validators.required),
       is_approve: new FormControl('', Validators.required),
-      image: new FormControl('', Validators.required),
+      image: new FormControl(''),
 
     });
   }
@@ -164,9 +164,9 @@ export class InventoryCreateComponent implements OnInit {
         },
       })
       .subscribe((res: any) => {
-        let inventory = Object.assign([], this.inventory);
-        inventory.unshift(res['Register']);
-        this.inventory = inventory;
+        let reward_inventory = Object.assign([], this.reward_inventory);
+        reward_inventory.unshift(res['Register']);
+        this.reward_inventory = reward_inventory;
         // console.log('Register inventory', this.inventory);
 
 
@@ -224,9 +224,9 @@ export class InventoryCreateComponent implements OnInit {
 
       })
       .subscribe((res: any) => {
-        let inventory = Object.assign([], this.inventory);
-        inventory.unshift(res['Update']);
-        this.inventory = inventory;
+        let reward_inventory = Object.assign([], this.reward_inventory);
+        reward_inventory.unshift(res['Update']);
+        this.reward_inventory = reward_inventory;
         // console.log('Update', this.inventory);
         this.router.navigate(['/']);
       });
