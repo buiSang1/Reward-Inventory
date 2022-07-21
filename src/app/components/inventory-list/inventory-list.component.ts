@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDialogModule, NbDialogService, NbToastrService } from '@nebular/theme';
+import {  NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
@@ -25,8 +25,8 @@ const Get_getAllRewardInventory = gql`query{
 
 }`
 const Get_getRewardInvenById = gql`
-  query ($ID: String!) {
-    getRewardInvenById(id: $ID) {
+  query ($id: String!) {
+    getRewardInvenById(id: $id) {
       _id
       type
       is_approve
@@ -35,22 +35,6 @@ const Get_getRewardInvenById = gql`
   }
 `;
 
-const Delete_RewardInventory = gql`
-mutation ($idRewardInventory: String!) {
-  deleteRewardInventory(id: $idRewardInventory) {
-  _id
-  name
-  description
-  type
-  price
-  total
-  shipping
-  sold
-  is_approve
-  image
-  active_flag
-  }
-}`
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
@@ -60,10 +44,11 @@ export class InventoryListComponent implements OnInit {
   reward_inventory: inventory[] = [];
   selectbyName = '';
   public status = '';
+  reward_id = '';
   constructor(private apollo: Apollo,
     private router: Router,
     private toastrService: NbToastrService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
   ) { }
 
   ngOnInit(): void {
@@ -84,27 +69,20 @@ export class InventoryListComponent implements OnInit {
       })
   }
 
-  RemoveRewardInventory(inventoryid: string) {
-    let confirmResult = confirm("Are you sure you want to remove this reward inventory");
-    if (confirmResult) {
+  RemoveRewardInventory(id: string) {
+    this.reward_id = id;
       this.apollo
         .mutate({
-          mutation: Delete_RewardInventory,
+          mutation: Get_getRewardInvenById,
           variables: {
-            idRewardInventory: inventoryid,
+             id : id,
           },
         })
         .subscribe((res: any) => {
-
-          if (res) {
-            this.toastrService.success( this.status,`Delete completed successfully`,)
-
-
-          }
-          this.loadData();
+          this.open();
         });
     }
-  }
+
   addIventory() {
     this.router.navigate(['project', '']);
   }
@@ -113,23 +91,22 @@ export class InventoryListComponent implements OnInit {
       .watchQuery({
         query: Get_getRewardInvenById,
         variables: {
-          ID: id,
+          id : id,
 
         },
       })
       .valueChanges.subscribe((res: any) => {
         this.reward_inventory = res.data.getRewardInvenById;
-        // console.log('Search By ID: ', id);
-        // console.log("Data: ", res.data.getRewardInvenById);
-        // console.log("res data:",res.data.getRewardInvenById.name)
-
       });
 
     this.router.navigate(['project', id]);
   }
   open() {
     this.dialogService.open(ConfirmDialogComponent, {
-
+      context:
+      {
+        reward_id : this.reward_id
+      }
     })
   }
 }

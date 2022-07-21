@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbComponentStatus, NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrService } from '@nebular/theme';
 // import { NbDialogRef } from '@nebular/theme';
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
@@ -109,7 +110,7 @@ export class InventoryCreateComponent implements OnInit {
   selectedItem: string = '01';
 
   selectedItem1: string = '01';
-
+  public status = '';
   selectedItem2: string = '01';
   data = {};
   registerForm: FormGroup;
@@ -117,15 +118,15 @@ export class InventoryCreateComponent implements OnInit {
   names: string[] = [];
   public id: any;
   isCard: boolean = true;
-
-
+  physicalPositions = NbGlobalPhysicalPosition;
+  logicalPositions = NbGlobalLogicalPosition;
 
   constructor(
     private apollo: Apollo,
     private router: Router,
     private route: ActivatedRoute,
-    public fb: FormBuilder
-
+    public fb: FormBuilder,
+    private toastrService: NbToastrService
   ) {
     this.registerForm = this.fb.group({
       name: new FormControl('', Validators.required),
@@ -167,7 +168,7 @@ export class InventoryCreateComponent implements OnInit {
         this.reward_inventory = reward_inventory;
         // console.log('Register inventory', this.inventory);
 
-
+        // this.toastrService.success( this.status,`Delete completed successfully`,)
         this.router.navigate(['/']);
       });
 
@@ -231,6 +232,13 @@ export class InventoryCreateComponent implements OnInit {
   }
   refresh(): void {
     window.location.reload();
+  }
+  showToast(position: NbGlobalPosition, status: NbComponentStatus, duration: any ) {
+    this.toastrService.show('', 'Please input name reward', {
+      position,
+      status,
+      duration
+    });
   }
 
 

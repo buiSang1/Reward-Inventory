@@ -1,12 +1,13 @@
+
 <nb-card>
   <nb-card-header>
-    Confirm delete
+    Confirm delete!!!!
   </nb-card-header>
   <nb-card-body>
     Are you sure you want to remove this reward inventory
   </nb-card-body>
   <nb-card-footer >
-    <button style="float: right;"  nbButton status="success">Success</button>
-    <button style="float: right;margin-right: 10px" nbButton status="info">Info</button>
+    <button style="float: right;" (click)="RemoveRewardInventory()" (click)="showToast(physicalPositions.BOTTOM_RIGHT, 'success', 1000)" nbButton status="success">Yes</button>
+    <button style="float: right;margin-right: 10px" (click)="cancel()"  nbButton status="info">No</button>
   </nb-card-footer>
 </nb-card>

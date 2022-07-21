@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NbToastrService } from '@nebular/theme';
+import { Component, Input, OnInit } from '@angular/core';
+import { NbComponentStatus, NbDialogRef, NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrService } from '@nebular/theme';
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
 const Get_getAllRewardInventory = gql`query{
@@ -20,8 +20,8 @@ const Get_getAllRewardInventory = gql`query{
 }`
 
 const Delete_RewardInventory = gql`
-mutation ($idRewardInventory: String!) {
-  deleteRewardInventory(id: $idRewardInventory) {
+mutation ($id: String!) {
+  deleteRewardInventory(id: $id) {
   _id
   name
   description
@@ -43,9 +43,18 @@ mutation ($idRewardInventory: String!) {
 })
 export class ConfirmDialogComponent implements OnInit {
   reward_inventory: inventory[] = [];
+  @Input() reward_id = '';
   public status = '';
+  public idRewardInventory: any ;
+
+  physicalPositions = NbGlobalPhysicalPosition;
+  logicalPositions = NbGlobalLogicalPosition;
+
+
   constructor(private apollo: Apollo,
-    private toastrService: NbToastrService,) { }
+    private toastrService: NbToastrService,
+    protected dialogRef: NbDialogRef<ConfirmDialogComponent>
+     ) { }
   private loadData() {
     this.apollo
       .watchQuery({
@@ -55,28 +64,35 @@ export class ConfirmDialogComponent implements OnInit {
       })
       .valueChanges.subscribe((res: any) => {
         this.reward_inventory = res?.data?.getAllRewardInventory;
-        // console.log("data Reward Inventory", res);
+
       })
   }
-  RemoveRewardInventory(inventoryid: string) {
 
-      this.apollo
+
+
+
+  showToast(position: NbGlobalPosition, status: NbComponentStatus, duration: any ) {
+     this.toastrService.show('', 'Inventory deleted successfully', {
+       position,
+       status,
+       duration
+     });
+   }
+
+  cancel() {
+    this.dialogRef.close();
+  }
+  RemoveRewardInventory() {
+
+    this.apollo
         .mutate({
           mutation: Delete_RewardInventory,
           variables: {
-            idRewardInventory: inventoryid,
+            id: this.reward_id,
           },
         })
         .subscribe((res: any) => {
-
-          if (res) {
-            this.toastrService.success(this.status, `Delete completed successfully`,)
-            // console.log("res", res);
-
-            // this.toastrService.success(res.data.reward_inventory, "Xóa thành công", );
-            // alert( )
-
-          }
+          this.cancel();
           this.loadData();
         });
 
@@ -86,3 +102,4 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
 }
+// this.toastrService.success(this.status, `Delete completed successfully`,)

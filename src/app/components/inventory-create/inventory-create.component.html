@@ -40,7 +40,7 @@
               <div class="col-md-1" style="margin-right: 10px;">
                 <p>Type</p>
                 <nb-select placeholder="Please select type" formControlName="type" fullWidth
-                  [selected]="registerForm.controls['type']?.value || selectedItem">
+                  [selected]="registerForm.controls['type'].value ">
                   <nb-option value="01">Others</nb-option>
                   <nb-option value="02">Point</nb-option>
                   <nb-option value="03">Voucher/Coupon</nb-option>
@@ -61,7 +61,7 @@
               <div class="col-md-1" style="margin-right: 10px;">
                 <p>Active</p>
                 <nb-select placeholder="Please select active" formControlName="active_flag" fullWidth
-                [selected]="registerForm.controls['active_flag']?.value ">
+                [selected]="registerForm.controls['active_flag'].value ">
                   <nb-option [value]="true">Active</nb-option>
                   <nb-option [value]="false">Not active</nb-option>
                 </nb-select>
@@ -71,7 +71,7 @@
               <div class="col-md-1" style="margin-left: 10px">
                 <p>Approve</p>
                 <nb-select placeholder="Please select approve" formControlName="is_approve" fullWidth
-                [selected]="registerForm.controls['is_approve']?.value ">
+                [selected]="registerForm.controls['is_approve'].value ">
                   <nb-option [value]="true">Approve</nb-option>
                   <nb-option [value]="false">Not approve</nb-option>
                 </nb-select>
@@ -103,10 +103,10 @@
           <button nbButton (click)="clearForm()" status="default">
             Clear
           </button>
-          <button style="margin-left: 10px" class="btn-submit" *ngIf="id === ''" (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
+          <button style="margin-left: 10px" class="btn-submit" *ngIf="id === ''"  (click)="RegisterInventory()" [disabled]="!registerForm.valid" nbButton status="default">
             Save
           </button>
-          <button style="margin-left: 10px" class="btn-submit" *ngIf="id != ''" (click)="updateRewardInventory()"  nbButton status="default">
+          <button style="margin-left: 10px" class="btn-submit" *ngIf="id != '' " (click)="updateRewardInventory()"  nbButton status="default">
             Update
           </button>
         </div>
