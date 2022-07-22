@@ -108,7 +108,6 @@ mutation(
 })
 export class InventoryCreateComponent implements OnInit {
   selectedItem: string = '01';
-
   selectedItem1: string = '01';
   public status = '';
   selectedItem2: string = '01';
@@ -120,6 +119,16 @@ export class InventoryCreateComponent implements OnInit {
   isCard: boolean = true;
   physicalPositions = NbGlobalPhysicalPosition;
   logicalPositions = NbGlobalLogicalPosition;
+  active_flag = false;
+
+  toggleActive(active_flag: boolean) {
+    this.active_flag = active_flag;
+  }
+  is_approve = false;
+
+  toggleApprove(is_approve: boolean) {
+    this.is_approve = is_approve;
+  }
 
   constructor(
     private apollo: Apollo,
@@ -130,21 +139,18 @@ export class InventoryCreateComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group({
       name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
+      description: new FormControl(''),
       price: new FormControl('', Validators.required),
       type: new FormControl('', Validators.required),
       total: new FormControl('', Validators.required),
-      active_flag: new FormControl('', Validators.required),
+      active_flag: new FormControl(false, Validators.required),
       shipping: new FormControl('', Validators.required),
       sold: new FormControl('', Validators.required),
-      is_approve: new FormControl('', Validators.required),
+      is_approve: new FormControl(false, Validators.required),
       image: new FormControl(''),
 
     });
   }
-
-
-
   RegisterInventory() {
     this.apollo
       .mutate({
@@ -166,14 +172,8 @@ export class InventoryCreateComponent implements OnInit {
         let reward_inventory = Object.assign([], this.reward_inventory);
         reward_inventory.unshift(res['Register']);
         this.reward_inventory = reward_inventory;
-        // console.log('Register inventory', this.inventory);
-
-        // this.toastrService.success( this.status,`Delete completed successfully`,)
         this.router.navigate(['/']);
       });
-
-
-
   }
   getRewardInventory(id: string) {
 
@@ -188,9 +188,6 @@ export class InventoryCreateComponent implements OnInit {
       .valueChanges.subscribe((res: any) => {
         this.data = res.data.getRewardInvenById
         this.registerForm.patchValue({ ...this.data })
-        // console.log(this.data);
-        // console.log(this.selectedItem)
-
       });
   }
   ngOnInit(): void {
@@ -198,8 +195,6 @@ export class InventoryCreateComponent implements OnInit {
     if (this.id != '') {
       this.getRewardInventory(this.id);
     }
-
-    // console.log(this.selectedItem)
   }
   updateRewardInventory() {
     const data = this.registerForm.value
@@ -220,28 +215,25 @@ export class InventoryCreateComponent implements OnInit {
           ISAPPROVE: this.registerForm.controls['is_approve'].value,
           IMAGE: this.registerForm.controls['image'].value,
         },
-
       })
       .subscribe((res: any) => {
         let reward_inventory = Object.assign([], this.reward_inventory);
         reward_inventory.unshift(res['Update']);
         this.reward_inventory = reward_inventory;
-        // console.log('Update', this.inventory);
+
         this.router.navigate(['/']);
       });
   }
   refresh(): void {
     window.location.reload();
   }
-  showToast(position: NbGlobalPosition, status: NbComponentStatus, duration: any ) {
+  showToast(position: NbGlobalPosition, status: NbComponentStatus, duration: any) {
     this.toastrService.show('', 'Please input name reward', {
       position,
       status,
       duration
     });
   }
-
-
   clearForm() {
     this.registerForm.reset();
   }

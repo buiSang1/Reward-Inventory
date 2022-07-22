@@ -1,63 +1,62 @@
-
-<nb-layout >
-
+<nb-layout>
   <nb-layout-column>
-<div class="table-users">
-  <button nbButton (click)="addIventory()" status="basic"
-    style="border: 1px solid rgb(219, 189, 189); float: right;padding: 16px;">
-    <nb-icon icon="plus-circle-outline"></nb-icon>
-  </button>
-  <div class="header">Reward Inventory List</div>
+    <div class="table-users">
+      <button nbButton (click)="addIventory()" status="basic"
+        style="border: 1px solid rgb(219, 189, 189); float: right;padding: 16px;">
+        <nb-icon icon="plus-circle-outline"></nb-icon>
+      </button>
+      <div class="header">Reward Inventory List</div>
 
-  <table cellspacing="0">
-    <tr>
-      <th style="text-align: center;">ACTION</th>
-      <th>NAME</th>
-      <th>DESCRIPTION</th>
-      <th>TYPE</th>
-      <th>ACTIVE</th>
-      <th>PRICE</th>
-      <th>TOTAL</th>
-      <th>SHIPPING</th>
-      <th>SOLD</th>
-      <th>APPROVE</th>
-      <th>IMAGE</th>
+      <table cellspacing="0">
+        <tr>
+          <th style="text-align: center; width: 150px;">ACTION</th>
+          <th>NAME</th>
+          <th>DESCRIPTION</th>
+          <th>TYPE</th>
+          <th>ACTIVE</th>
+          <th>PRICE</th>
+          <th>TOTAL</th>
+          <th>SHIPPING</th>
+          <th>SOLD</th>
+          <th>APPROVE</th>
+          <th>IMAGE</th>
 
-    </tr>
+        </tr>
 
-    <tr *ngFor="let reward of reward_inventory">
+        <tr *ngFor="let reward of reward_inventory">
 
-      <td  class="action">
-        <nb-action style="cursor:pointer" (click)="editRewardInventory(reward._id)" title="Nhấn vào để chỉnh sửa"
-          icon="edit-2-outline" >
-        </nb-action>
-        <nb-action (click)="RemoveRewardInventory(reward._id)" status="success"
-           style="cursor: pointer" title="Nhấn vào để xóa" icon="trash-2-outline"  >
-        </nb-action>
+          <td >
+            <nb-actions size="small" fullWidth >
+              <nb-action style="cursor:pointer" (click)="editRewardInventory(reward._id)" title="Nhấn vào để chỉnh sửa"
+                icon="edit-2-outline">
+              </nb-action>
+              <nb-action (click)="RemoveRewardInventory(reward._id)" status="success" style="cursor: pointer"
+                title="Nhấn vào để xóa" icon="trash-2-outline">
+              </nb-action>
+            </nb-actions>
+          </td>
 
-      </td>
+          <td>{{reward.name}}</td>
+          <td>{{reward.description}}</td>
 
-      <td>{{reward.name}}</td>
-      <td>{{reward.description}}</td>
+          <td *ngIf="reward.type === '01'">Others </td>
+          <td *ngIf="reward.type === '02'">Point</td>
+          <td *ngIf="reward.type === '03'">Voucher/Coupon</td>
+          <td *ngIf="reward.type === '04'">Course</td>
+          <td *ngIf="reward.type === '05'">Ticket</td>
 
-      <td *ngIf="reward.type === '01'">Others </td>
-      <td *ngIf="reward.type === '02'">Point</td>
-      <td *ngIf="reward.type === '03'">Voucher/Coupon</td>
-      <td *ngIf="reward.type === '04'">Course</td>
-      <td *ngIf="reward.type === '05'">Ticket</td>
-
-      <td>{{reward.active_flag ? 'Active' : 'No active'}}</td>
-      <td>{{reward.price}}</td>
-      <td>{{reward.total}}</td>
-      <td>{{reward.shipping}}</td>
-      <td>{{reward.sold}}</td>
-      <td>{{reward.is_approve ? 'Approve' : 'No approve'}}</td>
-      <td>
-        <img *ngIf="reward.image" src="{{reward.image}}">
-      </td>
-    </tr>
-  </table>
-</div>
-</nb-layout-column>
+          <td>{{reward.active_flag ? 'Active' : 'Not active'}}</td>
+          <td>{{reward.price}}</td>
+          <td>{{reward.total}}</td>
+          <td>{{reward.shipping}}</td>
+          <td>{{reward.sold}}</td>
+          <td>{{reward.is_approve ? 'Approve' : 'Not approve'}}</td>
+          <td>
+            <img *ngIf="reward.image" src="{{reward.image}}">
+          </td>
+        </tr>
+      </table>
+    </div>
+  </nb-layout-column>
 
 </nb-layout>

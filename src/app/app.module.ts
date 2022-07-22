@@ -48,7 +48,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     HttpClientModule,
     NbCheckboxModule,
     NbAlertModule,
-    NbToastrModule.forRoot()
+    NbToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
