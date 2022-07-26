@@ -1,37 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbComponentStatus, NbGlobalLogicalPosition, NbGlobalPhysicalPosition, NbGlobalPosition, NbToastrService } from '@nebular/theme';
-// import { NbDialogRef } from '@nebular/theme';
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
 
 const Posts_register = gql`
 mutation(
-  $NAME: String!,
-  $DESCRIPTION:String!,
-  $PRICE:Float!,
-  $TYPE:String!,
-  $TOTAL:Float!,
-  $ACTIVEFLAG:Boolean!
-  $SHIPPING:Float!,
-  $SOLD:Float!,
-  $ISAPPROVE: Boolean!,
-  $IMAGE:[String!]
+  $name: String!,
+  $description:String!,
+  $price:Float!,
+  $type:String!,
+  $total:Float!,
+  $active_flag:Boolean!
+  $shipping:Float!,
+  $sold:Float!,
+  $is_approve: Boolean!,
+  $image:[String!]
 )
 {
   creareRewardInventory(
     dataInput:{
-      name:$NAME,
-      description:$DESCRIPTION,
-      price:$PRICE,
-      type:$TYPE,
-      total:$TOTAL,
-      active_flag:$ACTIVEFLAG,
-      shipping:$SHIPPING,
-      sold:$SOLD,
-      is_approve:$ISAPPROVE,
-      image:$IMAGE,
+      name:$name,
+      description:$description,
+      price:$price,
+      type:$type,
+      total:$total,
+      active_flag:$active_flag,
+      shipping:$shipping,
+      sold:$sold,
+      is_approve:$is_approve,
+      image:$image,
     }
   ){
     name
@@ -62,31 +60,31 @@ const Get_getRewardInvenById = gql`
 
 const Update_RewardInventory = gql`
 mutation(
-  $ID: String!,
- 	$NAME: String!,
-  $DESCRIPTION:String!,
-  $PRICE:Float!,
-  $TYPE:String!,
-  $TOTAL:Float!,
-  $ACTIVEFLAG:Boolean!
-  $SHIPPING:Float!,
-  $SOLD:Float!,
-  $ISAPPROVE: Boolean!,
-  $IMAGE:[String!]
+  $id: String!,
+ 	$name: String!,
+  $description:String!,
+  $price:Float!,
+  $type:String!,
+  $total:Float!,
+  $active_flag:Boolean!
+  $shipping:Float!,
+  $sold:Float!,
+  $is_approve:Boolean!,
+  $image:[String!]
 ){
   updateRewardInventory(
-    id:$ID,
+    id:$id,
     change:{
-      name:$NAME,
-      description:$DESCRIPTION,
-      price:$PRICE,
-      type:$TYPE,
-      total:$TOTAL,
-      active_flag:$ACTIVEFLAG,
-      shipping:$SHIPPING,
-      sold:$SOLD,
-      is_approve:$ISAPPROVE,
-      image:$IMAGE,
+      name:$name,
+      description:$description,
+      price:$price,
+      type:$type,
+      total:$total,
+      active_flag:$active_flag,
+      shipping:$shipping,
+      sold:$sold,
+      is_approve:$is_approve,
+      image:$image,
     }
   ){
     _id
@@ -114,11 +112,8 @@ export class InventoryCreateComponent implements OnInit {
   data = {};
   registerForm: FormGroup;
   reward_inventory: inventory[] = [];
-  names: string[] = [];
   public id: any;
   isCard: boolean = true;
-  physicalPositions = NbGlobalPhysicalPosition;
-  logicalPositions = NbGlobalLogicalPosition;
   active_flag = false;
 
   toggleActive(active_flag: boolean) {
@@ -135,7 +130,6 @@ export class InventoryCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public fb: FormBuilder,
-    private toastrService: NbToastrService
   ) {
     this.registerForm = this.fb.group({
       name: new FormControl('', Validators.required),
@@ -156,16 +150,16 @@ export class InventoryCreateComponent implements OnInit {
       .mutate({
         mutation: Posts_register,
         variables: {
-          NAME: this.registerForm.controls['name'].value,
-          DESCRIPTION: this.registerForm.controls['description'].value,
-          PRICE: this.registerForm.controls['price'].value,
-          TYPE: this.registerForm.controls['type'].value,
-          TOTAL: this.registerForm.controls['total'].value,
-          ACTIVEFLAG: this.registerForm.controls['active_flag'].value,
-          SHIPPING: this.registerForm.controls['shipping'].value,
-          SOLD: this.registerForm.controls['sold'].value,
-          ISAPPROVE: this.registerForm.controls['is_approve'].value,
-          IMAGE: this.registerForm.controls['image'].value,
+          name: this.registerForm.controls['name'].value,
+          description: this.registerForm.controls['description'].value,
+          price: this.registerForm.controls['price'].value,
+          type: this.registerForm.controls['type'].value,
+          total: this.registerForm.controls['total'].value,
+          active_flag: this.registerForm.controls['active_flag'].value,
+          shipping: this.registerForm.controls['shipping'].value,
+          sold: this.registerForm.controls['sold'].value,
+          is_approve: this.registerForm.controls['is_approve'].value,
+          image: this.registerForm.controls['image'].value,
         },
       })
       .subscribe((res: any) => {
@@ -197,23 +191,21 @@ export class InventoryCreateComponent implements OnInit {
     }
   }
   updateRewardInventory() {
-    const data = this.registerForm.value
-    console.log('update', data);
     this.apollo
       .mutate({
         mutation: Update_RewardInventory,
         variables: {
-          ID: this.id,
-          NAME: this.registerForm.controls['name'].value,
-          DESCRIPTION: this.registerForm.controls['description'].value,
-          PRICE: this.registerForm.controls['price'].value,
-          TYPE: this.registerForm.controls['type'].value,
-          TOTAL: this.registerForm.controls['total'].value,
-          ACTIVEFLAG: this.registerForm.controls['active_flag'].value,
-          SHIPPING: this.registerForm.controls['shipping'].value,
-          SOLD: this.registerForm.controls['sold'].value,
-          ISAPPROVE: this.registerForm.controls['is_approve'].value,
-          IMAGE: this.registerForm.controls['image'].value,
+          id: this.id,
+          name: this.registerForm.controls['name'].value,
+          description: this.registerForm.controls['description'].value,
+          price: this.registerForm.controls['price'].value,
+          type: this.registerForm.controls['type'].value,
+          total: this.registerForm.controls['total'].value,
+          active_flag: this.registerForm.controls['active_flag'].value,
+          shipping: this.registerForm.controls['shipping'].value,
+          sold: this.registerForm.controls['sold'].value,
+          is_approve: this.registerForm.controls['is_approve'].value,
+          image: this.registerForm.controls['image'].value,
         },
       })
       .subscribe((res: any) => {
@@ -226,13 +218,6 @@ export class InventoryCreateComponent implements OnInit {
   }
   refresh(): void {
     window.location.reload();
-  }
-  showToast(position: NbGlobalPosition, status: NbComponentStatus, duration: any) {
-    this.toastrService.show('', 'Please input name reward', {
-      position,
-      status,
-      duration
-    });
   }
   clearForm() {
     this.registerForm.reset();

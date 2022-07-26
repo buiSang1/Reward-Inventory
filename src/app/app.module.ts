@@ -13,6 +13,8 @@ import { InventoryCreateComponent } from './components/inventory-create/inventor
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     NbCheckboxModule,
     NbAlertModule,
     NbToastrModule.forRoot(),
+    Ng2SmartTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

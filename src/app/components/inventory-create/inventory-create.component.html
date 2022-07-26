@@ -72,11 +72,6 @@
                 <p>Active</p>
                 <nb-checkbox status="basic" style="cursor: pointer;" formControlName="active_flag"
                   (checkedChange)="toggleActive(active_flag)"></nb-checkbox>
-                <!-- <nb-select placeholder="Please select active" formControlName="active_flag" fullWidth
-                [selected]="registerForm.controls['active_flag'].value ">
-                  <nb-option [value]="true">Active</nb-option>
-                  <nb-option [value]="false">Not active</nb-option>
-                </nb-select> -->
               </div>
             </div>
             <div class="row">
@@ -84,11 +79,6 @@
                 <p>Approve</p>
                 <nb-checkbox status="basic" style="cursor: pointer;" formControlName="is_approve"
                   (checkedChange)="toggleApprove(is_approve)"></nb-checkbox>
-                <!-- <nb-select placeholder="Please select approve" formControlName="is_approve" fullWidth
-                [selected]="registerForm.controls['is_approve'].value ">
-                  <nb-option [value]="true">Approve</nb-option>
-                  <nb-option [value]="false">Not approve</nb-option>
-                </nb-select> -->
               </div>
             </div>
           </div>

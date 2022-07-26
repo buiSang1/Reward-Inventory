@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import {  NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 
 import { Apollo, gql } from 'apollo-angular';
 import { inventory } from 'src/app/models/inventory';
@@ -41,6 +41,7 @@ const Get_getRewardInvenById = gql`
   styleUrls: ['./inventory-list.component.scss']
 })
 export class InventoryListComponent implements OnInit {
+
   reward_inventory: inventory[] = [];
   selectbyName = '';
   public status = '';
@@ -110,3 +111,5 @@ export class InventoryListComponent implements OnInit {
     })
   }
 }
+
+
